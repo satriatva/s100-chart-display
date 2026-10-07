@@ -1,0 +1,445 @@
+/* ============================================================
+   TAILWIND BASE
+============================================================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   GLOBAL LAYOUT FIXES
+============================================================ */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-gray-100 text-gray-800;
+}
+
+/* Leaflet map container */
+#map {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Let flex children scroll correctly */
+main {
+  min-height: 0; /* needed for flex + overflow */
+}
+
+/* Panel container di toolbar bisa scroll */
+#panel-container {
+  min-height: 0;
+}
+
+/* ============================================================
+   TOOLBAR / SIDEBAR
+============================================================ */
+#toolbar {
+  @apply relative flex flex-col bg-white border-l border-gray-200 shadow-xl;
+  z-index: 10;
+  transition: width 0.2s ease, transform 0.2s ease;
+}
+
+/* Default width di HTML sudah w-[380px], kita biarkan */
+#toolbar.sidebar-minimized {
+  width: 56px; /* mode mini */
+}
+
+/* Saat minimized, sembunyikan panel */
+#toolbar.sidebar-minimized #panel-container {
+  display: none;
+}
+
+/* Expand / Collapse button visibility */
+#btnExpand,
+#btnCollapse {
+  @apply transition;
+}
+
+/* Default: toolbar normal → Expand hidden, Collapse shown */
+#toolbar:not(.sidebar-minimized) #btnExpand {
+  display: none;
+}
+#toolbar:not(.sidebar-minimized) #btnCollapse {
+  display: flex;
+}
+
+/* Minimized: Expand shown, Collapse hidden */
+#toolbar.sidebar-minimized #btnExpand {
+  display: flex;
+}
+#toolbar.sidebar-minimized #btnCollapse {
+  display: none;
+}
+
+/* ============================================================
+   TABS (Settings, Layers, Attributes, SQL, Measurement)
+============================================================ */
+.tab-btn {
+  @apply flex items-center justify-center py-2 text-white text-xs md:text-sm font-medium cursor-pointer outline-none select-none;
+  position: relative;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tab-btn img.tab-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Simple tooltip for [data-tooltip] */
+
+.tab-btn:hover[data-tooltip]::after {
+  opacity: 1;
+}
+
+/* Active tab */
+.active-tab {
+  @apply bg-blue-800 shadow-inner;
+}
+
+/* ============================================================
+   SCROLLBAR CUSTOM
+============================================================ */
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #9ca3af #f3f4f6; /* thumb, track */
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 999px;
+}
+
+/* ============================================================
+   LAYER LIST PANEL
+============================================================ */
+.layer-item {
+  @apply flex items-center justify-between px-2 py-1 rounded-lg bg-white border border-gray-200 shadow-sm text-xs;
+}
+
+.layer-main {
+  @apply flex items-center gap-2 flex-1 min-w-0;
+}
+
+.layer-name {
+  @apply truncate text-gray-800;
+}
+
+/* Kanan: Tools (up/down/remove) */
+.layer-tools {
+  @apply flex items-center gap-1 ml-2;
+}
+
+/* Toggle bulat di kiri */
+.layer-toggle {
+  @apply w-4 h-4 rounded-full border border-blue-500 flex items-center justify-center text-[10px] leading-none cursor-pointer;
+  background: #3b82f6;
+  color: #ffffff;
+  padding: 0;
+}
+
+/* Toggle OFF */
+.layer-toggle.off {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+  color: #6b7280;
+}
+
+/* Tombol naik/turun/remove */
+.layer-order-btn {
+  @apply text-[10px] px-2 py-0.5 rounded border border-gray-300 bg-gray-50 hover:bg-gray-100 cursor-pointer;
+}
+
+/* ============================================================
+   MEASUREMENT TOOL BUTTONS
+============================================================ */
+.measure-icon-btn {
+  @apply inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-200 hover:bg-blue-100 border border-gray-300 cursor-pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+}
+
+.measure-icon-btn img.icon-white {
+  width: 18px;
+  height: 18px;
+  filter: invert(20%);
+}
+
+/* Active state */
+.measure-icon-btn.active {
+  @apply bg-blue-600 border-blue-700 shadow-md;
+}
+.measure-icon-btn.active img.icon-white {
+  filter: invert(100%);
+}
+
+/* Clear button circle */
+.measure-clear-btn {
+  @apply inline-flex items-center justify-center w-10 h-10 rounded-full border border-red-400 bg-white hover:bg-red-50 cursor-pointer shadow-sm;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.measure-clear-btn img.icon-dark {
+  width: 18px;
+  height: 18px;
+}
+
+/* Tooltips for the measure and clear buttons (also [data-tooltip]) */
+
+.measure-icon-btn:hover[data-tooltip]::after,
+.measure-clear-btn:hover[data-tooltip]::after {
+  opacity: 1;
+}
+
+/* Pastikan wrapper parent relative agar tooltip posisi benar */
+.measure-icon-btn,
+.measure-clear-btn {
+  position: relative;
+}
+
+/* Unit group row */
+.measure-unit-group {
+  @apply text-xs;
+}
+
+/* ============================================================
+   ATTRIBUTES PANEL
+============================================================ */
+
+/* List grup hasil identify */
+#groups li {
+  @apply flex items-center gap-2 cursor-pointer p-1 rounded-md hover:bg-blue-50 transition;
+}
+
+/* Table attributes */
+#featuresAttr table {
+  @apply w-full text-xs border-collapse;
+}
+
+#featuresAttr th,
+#featuresAttr td {
+  @apply border border-gray-200 px-2 py-1;
+}
+
+#featuresAttr thead tr {
+  @apply bg-gray-100;
+}
+
+/* ============================================================
+   SQL RESULTS LIST
+============================================================ */
+#queryResults li {
+  @apply flex items-center gap-2 cursor-pointer py-1;
+}
+
+/* ============================================================
+   ADD LAYER MODAL
+============================================================ */
+#addLayerModal {
+  /* di HTML sudah: fixed inset-0 bg-black/40 backdrop-blur-sm z-[9999] */
+}
+
+/* Panel di dalam modal */
+#addLayerModal .animate-fadeIn {
+  animation: fadeInScale 0.15s ease-out;
+}
+
+/* Tab di modal (From URL / Upload) */
+.addLayerTab {
+  @apply flex-1 text-xs font-medium px-3 py-2 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 text-center cursor-pointer;
+}
+
+.addLayerTab.active {
+  @apply bg-blue-600 text-white border-blue-600 shadow-sm;
+}
+
+/* Input / select di modal */
+#addLayerModal input[type="text"],
+#addLayerModal input[type="file"],
+#addLayerModal select {
+  @apply text-xs;
+}
+
+/* ============================================================
+   ICON HELPERS
+============================================================ */
+.icon-white {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-dark {
+  width: 18px;
+  height: 18px;
+}
+
+/* Label di Tab (misal text "Add Layer" dll kalau mau dipakai) */
+.tab-label {
+  @apply hidden md:inline-block ml-1 text-xs;
+}
+
+/* ============================================================
+   ANIMATIONS
+============================================================ */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================================
+   FIX — Sidebar Height & Scroll
+========================================= */
+#toolbar {
+  height: calc(100vh - 60px); /* tinggi penuh sisa header */
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Panel container harus scroll */
+#panel-container {
+  flex: 1;
+  overflow-y: auto !important;
+  min-height: 0;
+}
+
+/* =========================================
+   FIX — Tabs Active Highlight
+========================================= */
+.tab-btn.active-tab {
+  background-color: #1e40af !important;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+/* =========================================
+   FINAL FIX — Sidebar Minimized Mode
+========================================= */
+#toolbar.sidebar-minimized {
+  width: 60px !important;
+  background-color: #1e3a8a !important;  /* FULL biru */
+  border-left: none !important;
+}
+
+/* Hide panel (isi konten) */
+#toolbar.sidebar-minimized #panel-container {
+  display: none !important;
+}
+
+/* Tabs jadi vertikal */
+#toolbar.sidebar-minimized #toolbarTabs {
+  flex-direction: column !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 12px 0;
+  background-color: transparent !important;
+  height: 100%;
+}
+
+/* Tab button style di minimize */
+#toolbar.sidebar-minimized #toolbarTabs .tab-btn {
+  width: 42px !important;
+  height: 42px !important;
+  padding: 0 !important;
+
+  border-radius: 10px; /* biar bagus */
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: background-color 0.2s ease;
+}
+
+/* Hover effect */
+#toolbar.sidebar-minimized #toolbarTabs .tab-btn:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Active tab (highlight) */
+#toolbar.sidebar-minimized #toolbarTabs .tab-btn.active-tab {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+/* Icon ukuran tetap */
+#toolbar.sidebar-minimized .tab-btn img.tab-icon {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* Expand / collapse area tetap rapi */
+#toolbar.sidebar-minimized #btnExpand,
+#toolbar.sidebar-minimized #btnCollapse {
+  background-color: #1e40af !important;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+#btnExpand img,
+#btnCollapse img {
+  filter: brightness(0) invert(1);
+}
+
+/* Hide the old tooltip mode so it does not break the layout */
+#toolbar.sidebar-minimized .tab-btn[data-tooltip]::after {
+  display: none !important;
+}
+
+/* Tooltip global tetap bekerja */
+#tooltip {
+  pointer-events: none;
+  z-index: 99999;
+}
+
+/* =========================================
+   FIX — Minimize / Expand Sidebar
+========================================= */
+/* #toolbar.sidebar-minimized {
+  width: 56px;
+}
+
+#toolbar.sidebar-minimized #panel-container {
+  display: none !important;
+} */
+
+/* Tombol tab tetap bisa diklik saat sidebar minimize */
+/* #toolbar.sidebar-minimized #toolbarTabs .tab-btn {
+  pointer-events: auto !important;
+} */
+
+/* =========================================
+   FIX — Tab Panel Visibility
+========================================= */
+.tab-panel {
+  display: block;
+}
+
+.tab-panel.hidden {
+  display: none !important;
+}
+
+/* =========================================
+   FIX — Layer tools & toggles layout
+========================================= */
+.layer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+

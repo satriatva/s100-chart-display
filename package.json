@@ -1,0 +1,49 @@
+{
+  "name": "s100-chart-display",
+  "version": "1.0.0",
+  "description": "Web viewer for IHO S-100 nautical charts (S-101 ENC, S-102 bathymetry, S-104 water levels) on SuperMap iServer and Leaflet.",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "start": "node server/index.js"
+  },
+  "keywords": [
+    "s-100",
+    "s-101",
+    "s-102",
+    "s-104",
+    "iho",
+    "hydrography",
+    "nautical-chart",
+    "enc",
+    "bathymetry",
+    "webgis",
+    "leaflet",
+    "supermap",
+    "iserver",
+    "gis"
+  ],
+  "author": {
+    "name": "Satria Tesa Vici Andi",
+    "url": "https://github.com/satriatva"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/satriatva/s100-chart-display#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satriatva/s100-chart-display.git"
+  },
+  "dependencies": {
+    "@supermapgis/iclient-leaflet": "^12.1.1",
+    "express": "^4.18.2",
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.13",
+    "vite": "^5.3.5"
+  }
+}
